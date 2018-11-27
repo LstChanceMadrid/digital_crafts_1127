@@ -1,32 +1,130 @@
-.App {
-  text-align: center;
+* {
+	box-sizing: border-box;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+body {
+	padding: 0;
+	margin: 0;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.header-container {
+	position: fixed;
+	height: 3em;
+	background: rgba(0, 0, 0, 0.75);
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
 }
 
+.header-container .logo {
+	align-self: auto;
+}
+
+.nav-container {
+	text-decoration: none;
+	flex: 1 1 50%;
+}
+
+.nav-list {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+	list-style: none;
+	padding: 0;
+}
+.nav-list li {
+	display: block;
+}
+
+#hamburger {
+	display: none;
+}
+
+@media only screen and (max-width: 768px) {
+
+	.nav-list li {
+		transform: scale(0.75)
+	}
+
+	.search-bar-container {
+		display: flex;
+		transform: scale(0.9);
+		justify-content: space-around;
+	}
+}
+
+@media only screen and (max-width: 600px) {
+
+	.nav-list li {
+		display: none;
+	}
+
+	.search-bar-container {
+		display: flex;
+		transform: scale(1);
+	}
+
+	#hamburger {
+		transform: scale(2);
+		display: block;
+		position: fixed;
+		top: 1em;
+		right: 1em;
+	}
+}
+
+
+.search-bar-container {
+	display: flex;
+	justify-content: space-around;
+}
+
+.search-bar {
+	height: 2em;
+	padding-left: 1em;
+}
+
+form {
+	display: flex;
+	padding: 0;
+	margin: 0;
+	justify-content: space-around;
+}
+
+.magnifying-glass {
+	height: 2em;
+	background-image: url('https://banner2.kisspng.com/20180429/ufw/kisspng-computer-icons-font-awesome-magnifying-glass-clip-5ae576ee307978.7622812615249876301986.jpg');
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	border: none;
+}
+
+
+
+.content-container {
+	padding-top:4em;
+}
+
+
+
+.footer-container {
+	background: black;
+	color: gray;
+	text-align: center;
+	padding: 1em;
+}
 .App-link {
-  color: #61dafb;
+	color: #61dafb;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }
