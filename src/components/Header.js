@@ -1,15 +1,82 @@
 import React, { Component } from 'react'
+import {Link, NavLink} from 'react-router-dom'
+
+const SEARCH_URL = 'http://localhost:5001/api/search-terms'
+
+
 
 export default class Header extends Component {
+
+	// constructor(props) {
+	// 	super(props)
+
+	// 	this.state = {
+	// 		response : '',
+	// 		search : '',
+	// 		responseToSearch : ''
+	// 	}
+	// }
+
+	state = {
+		response : '',
+			search : '',
+			responseToSearch : ''
+	}
+
+	componentDidMount() {
+		this.callApi()
+		  .then(res => this.setState({ response: res.express }))
+		  .catch(err => console.log(err));
+	  }
+	
+
+	callApi = async () => {
+		const response = await fetch('/api/hello');
+		const body = await response.json();
+
+		if (response.status !== 200) throw Error(body.message);
+
+		return body;
+	};
+
+
+	handleTextBoxOnChange = (e) => {
+		console.log(e.target.name)
+		console.log(e.target.value)
+
+		this.setState({
+			search : e.target.value
+		})
+	}
+
+	handleSearchButtonClick = async e => {
+
+		e.preventDefault();
+
+		const response =  await fetch('/api/world', {
+			method: 'POST',
+			headers : {
+				'Content-Type' : 'application/json'
+			},
+			body : JSON.stringify({search : this.state.search})
+		});
+		
+		const body = await response.text();
+
+		this.setState({responseToSearch : body});
+		console.log(this.state.responseToSearch)
+	}
+
 
 	render() {
 		return (
 		<div className="header-container">
-			<label className="logo">good<b>reads</b></label>
+			<label><NavLink className="logo" to = "/">good<b>reads</b></NavLink></label>
 
 			<nav className="nav-container">
 				<ul className="nav-list">
-					<li>Home</li>
+					<li><Link to = "/">Home</Link></li>
+						{/* // #link and navlink can be accessed form .nav-list a */}
 
 					<li>My Books</li>
 
@@ -18,10 +85,11 @@ export default class Header extends Component {
 					<li>Community <i className="fa fa-caret-down"></i></li>
 
 					<div  className="search-bar-container">
-					<form>
-						<input className="search-bar" type="text" placeholder="Search" />
-						<input className="magnifying-glass" type="submit" value="   " />
-					</form>
+						<form onSubmit={this.handleSearchButtonClick}>
+							<input className="search-bar"  type="text" onChange={this.handleTextBoxOnChange} name="search" placeholder="Search" value={this.state.search} />
+
+							<input className="magnifying-glass" type="submit" value="" />
+						</form>
 					</div>
 					
 					<li>Sign In</li>
@@ -31,7 +99,11 @@ export default class Header extends Component {
 					<i id="hamburger" className="fa fa-bars"></i>
 				</ul>
 			</nav>
+
+			<p>{this.state.responseToSearch}</p>
 		</div>
+
+
 		)
 	}
 }
