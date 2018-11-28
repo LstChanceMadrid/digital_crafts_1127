@@ -1,33 +1,47 @@
 import React, { Component } from 'react'
 import {Link, NavLink} from 'react-router-dom'
 
-const SEARCH_URL = 'http://localhost:5001/api/search-terms'
 
 
 
 export default class Header extends Component {
 
-	// constructor(props) {
-	// 	super(props)
+	constructor(props) {
+		super(props)
 
-	// 	this.state = {
-	// 		response : '',
-	// 		search : '',
-	// 		responseToSearch : ''
-	// 	}
-	// }
-
-	state = {
-		response : '',
+		this.state = {
+			response : '',
 			search : '',
 			responseToSearch : ''
+		}
 	}
+
+	// state = {
+	// 	response : '',
+	// 		search : '',
+	// 		responseToSearch : ''
+	// }
 
 	componentDidMount() {
 		this.callApi()
 		  .then(res => this.setState({ response: res.express }))
 		  .catch(err => console.log(err));
+
+		  this.callSearchApi().then(res => {
+			  this.setState({search : res.search})
+		  }).catch(err => {
+			  console.log(err)
+		  })
 	  }
+
+	callSearchApi = async () => {
+		const search = await fetch('/api/world')
+		const body = await search.json();
+
+		if (search.status !== 200) throw Error(body.message);
+
+		return body
+	}
 	
 
 	callApi = async () => {

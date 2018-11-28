@@ -4,6 +4,12 @@ const IMAGES_URL = "https://raw.githubusercontent.com/benoitvallon/100-best-book
 
 
 export default class BookList extends Component {
+
+
+
+
+
+
   render() {
 
     let bookItems = this.props.books.map((book, index) => {

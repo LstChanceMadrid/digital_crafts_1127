@@ -15,6 +15,7 @@ export default class Content extends Component {
             books : []
         }
     }
+    
     componentDidMount() {
 
         fetch(BOOKS_URL).then(response => {
